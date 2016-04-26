@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="llamadas_x_ciudad" model="ir.ui.view">
+            <field name="name">llamadas.x.ciudad</field>
+            <field name="model">llamadas.x.ciudad</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="2">
+                            <field name="name" />
+
+                            <field name="section_id" options="{'no_create':true,'no_open': True , 'limit': 15}"/>
+                            <field name="user_id" options="{'no_create':true,'no_open': True , 'limit': 15}"/>
+                            <field name="city" />
+
+                        </group>
+                        <footer>
+                            <button class="oe_highlight" name="set_phonecalls" string="crear" type="object"/>
+                            <button special="cancel" string="Cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_llamadas_x_ciudad" model="ir.actions.act_window">
+            <field name="name">llamadas por ciudad</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">llamadas.x.ciudad</field>
+            <field name="view_id" ref="llamadas_x_ciudad"/>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem action="action_llamadas_x_ciudad" id="menu_action_llamadas_x" parent="base.marketing_menu" sequence="12"/>
+        <menuitem action="action_llamadas_x_ciudad" id="menu_action_llamadas_x_ciudad" parent="menu_action_llamadas_x" sequence="12"/>
+
+    </data>
+</openerp>
