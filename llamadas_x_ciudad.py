@@ -50,10 +50,14 @@ class llamadas_x_ciudad(osv.osv_memory):
             phonecall['date']=datetime.datetime.today() +datetime.timedelta(days=days)
             phonecall['section_id']=data['section_id'][0]
             phonecall['user_id']=data['user_id'][0]
-            res_id=phonecall_ob.create(cr,uid,phonecall,context=None)
-            if count > 40 :
-                days +=1
-                count =0 
+            try : 
+                res_id=phonecall_ob.create(cr,uid,phonecall,context=None)
+                if count > 40 :
+                    days +=1
+                    count =0 
+            except :
+                _logger.info('partern error %r ' ,partner)
+
 
 
 
