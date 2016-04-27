@@ -39,24 +39,27 @@ class llamadas_x_ciudad(osv.osv_memory):
         partners_ids=partner_ob.search(cr,uid, [('city', 'ilike', data['city']),'|',('mobile','!=',None),('phone','!=',None)],offset=0,limit=2000)
         days=1
         count=0
-        for partner in partner_ob.browse(cr,uid,partners_ids):
-            _logger.info('city %r ' ,partner['city'])
-            count +=1 
-            phonecall={}
-            phonecall['name']=data['name'] 
-            phonecall['partner_id']=partner['id']
-            phonecall['partner_mobile']=partner['mobile']
-            phonecall['partner_phone']=partner['phone']
-            phonecall['date']=datetime.datetime.today() +datetime.timedelta(days=days)
-            phonecall['section_id']=data['section_id'][0]
-            phonecall['user_id']=data['user_id'][0]
+        for partner_id in partners_ids:
+            _logger.info('partner_id %r ' , partner_id)
+
             try : 
+                partner=partner_ob.browse(cr,uid,[partner_id])
+                _logger.info('city %r ' ,partner['city'])
+                count +=1 
+                phonecall={}
+                phonecall['name']=data['name'] 
+                phonecall['partner_id']=partner['id']
+                phonecall['partner_mobile']=partner['mobile']
+                phonecall['partner_phone']=partner['phone']
+                phonecall['date']=datetime.datetime.today() +datetime.timedelta(days=days)
+                phonecall['section_id']=data['section_id'][0]
+                phonecall['user_id']=data['user_id'][0]
                 res_id=phonecall_ob.create(cr,uid,phonecall,context=None)
                 if count > 40 :
                     days +=1
                     count =0 
             except :
-                _logger.info('partern error %r ' ,partner)
+                _logger.info('partern error ' )
 
 
 
